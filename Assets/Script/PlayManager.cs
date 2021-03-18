@@ -10,11 +10,17 @@ public class PlayManager : MonoBehaviour
     public GameObject PlayerPref;
     //public GameObject GameCanvas;
     public GameObject SceneCamera;
+    public Text PingText;
     // Start is called before the first frame update
     private void Awake()
     {
         //GameCanvas.SetActive(true);
         SpawnPlayer();
+    }
+
+    private void Update()
+    {
+        PingText.text = "Ping : " + PhotonNetwork.GetPing();
     }
     public void SpawnPlayer()
     {
