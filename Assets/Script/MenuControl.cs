@@ -8,10 +8,8 @@ using Photon.Realtime;
 public class MenuControl : MonoBehaviourPunCallbacks
 {
     //[SerializeField] private string VersionName = "0.1";
-    [SerializeField] private GameObject UsernameMenu;
     [SerializeField] private GameObject ConnectPanel;
 
-    [SerializeField] private InputField UsernameInput;
     [SerializeField] private InputField CreateGameInput;
     [SerializeField] private InputField JoinGameInput;
 
@@ -24,7 +22,7 @@ public class MenuControl : MonoBehaviourPunCallbacks
 
     private void Start()
     {
-        UsernameMenu.SetActive(true);
+
     }
 
     // Update is called once per frame
@@ -32,24 +30,6 @@ public class MenuControl : MonoBehaviourPunCallbacks
     {
         PhotonNetwork.JoinLobby(TypedLobby.Default);
         Debug.Log("Connected");
-    }
-
-    public void ChangeUsername()
-    {
-        if(UsernameInput.text.Length >= 3)
-        {
-            PlayButton.SetActive(true);
-        }
-        else
-        {
-            PlayButton.SetActive(false);
-        }
-    }
-
-    public void SetUsername()
-    {
-        UsernameMenu.SetActive(false);
-        PhotonNetwork.NickName = UsernameInput.text;
     }
 
     public void CreateGame()
