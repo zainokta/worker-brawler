@@ -60,7 +60,7 @@ public class MenuControl : MonoBehaviourPunCallbacks
     public void JoinGame()
     {
         RoomOptions roomOptions = new RoomOptions();
-        roomOptions.MaxPlayers = 4;
+        roomOptions.MaxPlayers = 2;
         PhotonNetwork.JoinOrCreateRoom(JoinGameInput.text, roomOptions, TypedLobby.Default);
     }
 
