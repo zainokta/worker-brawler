@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 using Photon.Pun;
 using Photon.Realtime;
 
@@ -30,7 +31,7 @@ public class CharSelectControl : MonoBehaviour
 
             if (Input.GetAxis("Submit") == 1)
             {
-                PhotonNetwork.LoadLevel("Gameplay");
+                SceneManager.LoadScene("Lobby");
             }
             /*if (animator.GetBool("Pressed"))
             {

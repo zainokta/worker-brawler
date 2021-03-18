@@ -4,27 +4,28 @@ using UnityEngine;
 using UnityEngine.UI;
 using Photon.Pun;
 using Photon.Realtime;
+using Random = UnityEngine.Random;
 
 public class MenuControl : MonoBehaviourPunCallbacks
 {
-    //[SerializeField] private string VersionName = "0.1";
-    [SerializeField] private GameObject UsernameMenu;
-    [SerializeField] private GameObject ConnectPanel;
+    private const byte MAX_PLAYERS = 2;
+    private RoomOptions roomOptions;
 
-    [SerializeField] private InputField UsernameInput;
-    [SerializeField] private InputField CreateGameInput;
-    [SerializeField] private InputField JoinGameInput;
-
-    [SerializeField] private GameObject PlayButton;
     // Start is called before the first frame update
     private void Awake()
     {
-        PhotonNetwork.ConnectUsingSettings();
+        if (!PhotonNetwork.IsConnected)
+        {
+            PhotonNetwork.ConnectUsingSettings();
+        }
     }
 
     private void Start()
     {
-        UsernameMenu.SetActive(true);
+        roomOptions = new RoomOptions() { MaxPlayers = MAX_PLAYERS };
+        PhotonNetwork.NickName = "Rakei";
+
+        Debug.Log(PhotonNetwork.NickName);
     }
 
     // Update is called once per frame
@@ -34,35 +35,28 @@ public class MenuControl : MonoBehaviourPunCallbacks
         Debug.Log("Connected");
     }
 
-    public void ChangeUsername()
+    public void CreateLobby()
     {
-        if(UsernameInput.text.Length >= 3)
+        if (PhotonNetwork.IsConnectedAndReady)
         {
-            PlayButton.SetActive(true);
-        }
-        else
-        {
-            PlayButton.SetActive(false);
+            PhotonNetwork.CreateRoom("roomjen", roomOptions, null);
         }
     }
 
-    public void SetUsername()
+    public void QuickMatch()
     {
-        UsernameMenu.SetActive(false);
-        PhotonNetwork.NickName = UsernameInput.text;
+        if (PhotonNetwork.IsConnectedAndReady)
+        {
+            //PhotonNetwork.JoinRandomRoom();
+            PhotonNetwork.JoinRoom("roomjen");
+        }
     }
 
-    public void CreateGame()
+    private string GenerateRandomRoomName()
     {
-        PhotonNetwork.CreateRoom(CreateGameInput.text, new RoomOptions() { MaxPlayers = 4 }, null);
-    }
-
-    public void JoinGame()
-    {
-        RoomOptions roomOptions = new RoomOptions();
-        roomOptions.MaxPlayers = 4;
-        PhotonNetwork.JoinOrCreateRoom(JoinGameInput.text, roomOptions, TypedLobby.Default);
-    }
+        int room = Random.Range(0, 999999);
+        return "lobby-" + room;
+}
 
     public override void OnJoinedRoom()
     {
