@@ -2,9 +2,17 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[System.Serializable]
+public struct playerData
+{
+    public int PlayerChoosen;
+    public string playerName;
+}
+
 public class GameManager : MonoBehaviour
 {
     private static GameManager instance;
+    public playerData pl;
     [SerializeField] Animator animFade;
 
     private void Awake()

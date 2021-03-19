@@ -10,6 +10,8 @@ public class LobbyManager : MonoBehaviourPunCallbacks
 {
     [SerializeField]
     private Text[] texts;
+    [SerializeField]
+    private Text roomName;
     private bool started;
 
     [SerializeField]
@@ -19,7 +21,7 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     void Start()
     {
         texts[0].text = PhotonNetwork.LocalPlayer.NickName;
-        
+        roomName.text = PhotonNetwork.CurrentRoom.Name;
         PhotonNetwork.AutomaticallySyncScene = true;
     }
 
