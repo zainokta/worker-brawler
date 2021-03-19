@@ -32,7 +32,7 @@ public class CharSelectControl : MonoBehaviour
             if (Input.GetAxis("Submit") == 1)
             {
                 GameManager gm = FindObjectOfType<GameManager>();
-                gm.PlayerChoosen = thisIndex;
+                gm.pl.PlayerChoosen = thisIndex;
                 SceneManager.LoadScene("Lobby");
             }
             /*if (animator.GetBool("Pressed"))

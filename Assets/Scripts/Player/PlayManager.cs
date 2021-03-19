@@ -16,7 +16,7 @@ public class PlayManager : MonoBehaviour
     {
         //GameCanvas.SetActive(true);
         GameManager Gm = FindObjectOfType<GameManager>();
-        SpawnPlayer(Gm.PlayerChoosen);
+        SpawnPlayer(Gm.pl.PlayerChoosen);
     }
 
     private void Update()
