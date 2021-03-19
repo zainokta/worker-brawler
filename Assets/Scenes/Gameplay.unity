@@ -134,7 +134,7 @@ GameObject:
   - component: {fileID: 54539671}
   - component: {fileID: 54539670}
   m_Layer: 0
-  m_Name: GameManager
+  m_Name: GameplayManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -152,7 +152,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 00ab65404d844ff4e846707b70b9aed1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  PlayerPref: {fileID: 8480310434977078577, guid: 3cefcc1540c9c5e4e86886ae0a34c61f, type: 3}
+  PlayerPref:
+  - {fileID: 8480310434977078577, guid: 3cefcc1540c9c5e4e86886ae0a34c61f, type: 3}
+  - {fileID: 8480310434977078577, guid: 4ee34b9b2c3979d4894ac4a293ac1288, type: 3}
+  - {fileID: 8480310434977078577, guid: af5cdd7d31765274a8e0479f7bd81dce, type: 3}
+  - {fileID: 8480310434977078577, guid: cdd11df1d94e1504cac5eca3a682b8a5, type: 3}
   SceneCamera: {fileID: 763195745}
   PingText: {fileID: 2112988956}
 --- !u!4 &54539671
