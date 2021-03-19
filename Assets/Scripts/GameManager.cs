@@ -25,5 +25,11 @@ public class GameManager : MonoBehaviour
     public void FadeScreen(string state)
     {
         animFade.Play(state);
+        StartCoroutine(WaitFade());
+    }
+
+    IEnumerator WaitFade()
+    {
+        yield return new WaitForSeconds(1);
     }
 }
