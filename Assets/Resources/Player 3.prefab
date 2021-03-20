@@ -211,6 +211,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 407108c325603df45a097d75af496a76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  MoveDir: 0
+  ProjectSpeed: 0
+  DestroyTime: 0
   Damage: 0.2
 --- !u!1 &7719946028620957624
 GameObject:
@@ -517,12 +520,20 @@ MonoBehaviour:
   photonView: {fileID: 2328323861000412478}
   rb: {fileID: 8480310434977078578}
   PlayerCamera: {fileID: 9051639884017858311}
+  Collider: {fileID: 0}
+  SlideCollider: {fileID: 0}
+  CrouchCollider: {fileID: 0}
   Sr: {fileID: 8480310434977078580}
   Weapon: {fileID: 5951476028200335756}
   PlayerName: {fileID: 8903785872292959904}
   IsGrounded: 0
   MoveSpeed: 5
   JumpForce: 200
+  slideSpeed: 5
+  ProjectileObjectRight: {fileID: 0}
+  ProjectileObjectLeft: {fileID: 0}
+  FirePosRight: {fileID: 0}
+  FirePosLeft: {fileID: 0}
 --- !u!114 &2328323861000412478
 MonoBehaviour:
   m_ObjectHideFlags: 0
