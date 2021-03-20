@@ -21,7 +21,7 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     void Start()
     {
         texts[0].text = PhotonNetwork.LocalPlayer.NickName;
-        roomName.text = PhotonNetwork.CurrentRoom.Name;
+        roomName.text = PhotonNetwork.CurrentRoom.Name + " ("+PhotonNetwork.CloudRegion+")";
         PhotonNetwork.AutomaticallySyncScene = true;
     }
 
