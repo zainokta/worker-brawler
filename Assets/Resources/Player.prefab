@@ -500,7 +500,7 @@ MonoBehaviour:
   SlideCollider: {fileID: 323752821889680068}
   CrouchCollider: {fileID: 1750410872945793542}
   Sr: {fileID: 8480310434977078580}
-  Weapon: {fileID: 0}
+  Weapon: {fileID: 1447592537381669537, guid: 6c9a95bb454968245a180d1a8a47012c, type: 3}
   PlayerName: {fileID: 8903785872292959904}
   IsGrounded: 0
   MoveSpeed: 5
