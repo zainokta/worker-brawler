@@ -55,7 +55,7 @@ public class Login : MonoBehaviour
 
     IEnumerator Wait()
     {
-        yield return new WaitForSeconds(5);
+        yield return new WaitForSeconds(2);
         gameManager.FadeScreen("FadeOut");
         yield return new WaitForSeconds(1);
         SceneManager.LoadScene("MainMenu");
