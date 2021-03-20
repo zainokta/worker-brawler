@@ -6,7 +6,7 @@ using UnityEngine.SceneManagement;
 using Photon.Pun;
 using Photon.Realtime;
 
-public class CharSelectControl : MonoBehaviour
+public class CharSelectControl : MonoBehaviourPun
 {
     [SerializeField] CharPick charPick;
     [SerializeField] Animator animator;
@@ -34,6 +34,10 @@ public class CharSelectControl : MonoBehaviour
                 GameManager gm = FindObjectOfType<GameManager>();
                 gm.pl.PlayerChoosen = thisIndex;
                 SceneManager.LoadScene("Lobby");
+            }
+            if (!PhotonNetwork.IsMasterClient)
+            {
+                StartCoroutine(GameManager.instance.Countdown());
             }
             /*if (animator.GetBool("Pressed"))
             {

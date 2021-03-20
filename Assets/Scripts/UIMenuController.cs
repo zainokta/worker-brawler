@@ -1,10 +1,11 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class UIMenuController : MonoBehaviour
 {
-
+    [SerializeField] Text buildVersion;
     GameManager gameManager;
     SoundManager soundManager;
 
@@ -15,12 +16,19 @@ public class UIMenuController : MonoBehaviour
         soundManager = FindObjectOfType<SoundManager>();
         gameManager.FadeScreen("FadeIn");
         soundManager.Play("MainTheme");
+        VersionBuild();
     }
 
     // Update is called once per frame
     void Update()
     {
         
+    }
+
+    public void VersionBuild()
+    {
+        Debug.Log("Application Version : " + Application.version);
+        buildVersion.text = "Application Version : " + Application.version;
     }
 
     public void SetPanel(GameObject obj, bool a)
@@ -44,6 +52,5 @@ public class UIMenuController : MonoBehaviour
         yield return new WaitForSeconds(.5f);
         obj.SetActive(a);
     }
-
 
 }
