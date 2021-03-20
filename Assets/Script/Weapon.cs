@@ -6,27 +6,48 @@ using Photon.Pun;
 
 public class Weapon : MonoBehaviourPunCallbacks
 {
-    private bool Attacked;
+    public bool MoveDir = false;
+
+    public float ProjectSpeed;
+
+    public float DestroyTime;
+
     public float Damage;
     // Start is called before the first frame update
     void Awake()
     {
-        Attacked = false;
+        StartCoroutine("DestroyIntime");
     }
 
     // Update is called once per frame
-    void Update()
+    IEnumerator DestroyIntime()
     {
-        if (Input.GetKeyDown(KeyCode.Mouse1))
-        {
-            Attacked = true;
-        }
-        /*else if (Input.GetKeyUp(KeyCode.Mouse1))
-        {
-            Attacked = false;
-        }*/
+        yield return new WaitForSeconds(DestroyTime);
+        this.GetComponent<PhotonView>().RPC("DestroyObject", RpcTarget.AllBuffered);
+    }
 
-        Debug.Log("Attacked : " + Attacked);
+    [PunRPC]
+    public void ChangeDir()
+    {
+        MoveDir = true;
+    }
+
+    [PunRPC]
+    public void DestroyObject()
+    {
+        Destroy(this.gameObject);
+    }
+
+    private void Update()
+    {
+        if (!MoveDir)
+        {
+            transform.Translate(Vector2.right * ProjectSpeed * Time.deltaTime);
+        }
+        else
+        {
+            transform.Translate(Vector2.left * ProjectSpeed * Time.deltaTime);
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -38,12 +59,13 @@ public class Weapon : MonoBehaviourPunCallbacks
 
         PhotonView target = collision.gameObject.GetComponent<PhotonView>();
 
-        if (target != null && (!target.IsMine || target.IsRoomView))
+        if(target != null && (!target.IsMine || target.IsRoomView))
         {
             if(target.tag == "Player")
             {
                 target.RPC("ReduceHealth", RpcTarget.AllBuffered, Damage);
             }
+            this.GetComponent<PhotonView>().RPC("DestroyObject", RpcTarget.AllBuffered);
         }
     }
 }
