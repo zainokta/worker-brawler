@@ -8,7 +8,14 @@ using Photon.Realtime;
 public class Health : MonoBehaviourPunCallbacks
 {
     public Image FillImage;
+    //private float HealthVal;
+    //private float Value = 100f;
     // Start is called before the first frame update
+    //private void Start()
+    //{
+        //HealthVal = Value;
+    //}
+
     [PunRPC]
     public void ReduceHealth(float amount)
     {
