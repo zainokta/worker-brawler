@@ -14,20 +14,21 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     private Text roomName;
     private bool started;
 
-    [SerializeField]
-    private Button readyButton;
+    [SerializeField] Text timer;
 
     // Start is called before the first frame update
     void Start()
     {
         texts[0].text = PhotonNetwork.LocalPlayer.NickName;
-        roomName.text = PhotonNetwork.CurrentRoom.Name + " ("+PhotonNetwork.CloudRegion+")";
+        roomName.text = "Server : " + PhotonNetwork.CloudRegion;
         PhotonNetwork.AutomaticallySyncScene = true;
     }
 
     // Update is called once per frame
     void Update()
     {
+        timer.text = GameManager.instance.Timer.ToString();
+        StartCoroutine(Timeout());
         if (PhotonNetwork.PlayerList.Length == 2)
         {
             texts[1].text = PhotonNetwork.PlayerListOthers[0].NickName;
@@ -44,6 +45,7 @@ public class LobbyManager : MonoBehaviourPunCallbacks
         if (!started && PhotonNetwork.IsMasterClient)
         {
             started = true;
+            StartCoroutine(GameManager.instance.Countdown());
             yield return new WaitForSeconds(5f);
             PhotonNetwork.LoadLevel("Gameplay");
         }
