@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 3720098664300265483}
   - component: {fileID: 1879420727563881808}
   - component: {fileID: 140712383611888775}
-  - component: {fileID: 9087942506040203407}
   m_Layer: 0
   m_Name: Image
   m_TagString: Untagged
@@ -76,19 +75,6 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &9087942506040203407
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1747018848618057963}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6168cb6cb9519674eb6d748017318c96, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  FillImage: {fileID: 140712383611888775}
 --- !u!1 &7610568931656735170
 GameObject:
   m_ObjectHideFlags: 0
@@ -345,6 +331,7 @@ GameObject:
   - component: {fileID: 4385545184167189165}
   - component: {fileID: 1750410872945793542}
   - component: {fileID: 323752821889680068}
+  - component: {fileID: 4626740270348418877}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -500,11 +487,10 @@ MonoBehaviour:
   SlideCollider: {fileID: 323752821889680068}
   CrouchCollider: {fileID: 1750410872945793542}
   Sr: {fileID: 8480310434977078580}
-  Weapon: {fileID: 0}
   PlayerName: {fileID: 8903785872292959904}
   IsGrounded: 0
   MoveSpeed: 5
-  JumpForce: 200
+  JumpForce: 300
   slideSpeed: 600
   ProjectileObjectRight: {fileID: 5693716904153691496, guid: 6c9a95bb454968245a180d1a8a47012c, type: 3}
   ProjectileObjectLeft: {fileID: 4003769628327699335, guid: e747f8a8dcc377d4b8fed8be1612d59a, type: 3}
@@ -588,6 +574,25 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1.8308694, y: 0.77339935}
   m_EdgeRadius: 0
+--- !u!114 &4626740270348418877
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8480310434977078577}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6168cb6cb9519674eb6d748017318c96, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Amount: 100
+  FillImage: {fileID: 140712383611888775}
+  rb: {fileID: 8480310434977078578}
+  spriteRenderer: {fileID: 8480310434977078580}
+  boxCollider2D: {fileID: 4385545184167189165}
+  Bar: {fileID: 1546497941698654503}
+  nameChar: {fileID: 8903785872292959904}
 --- !u!1 &8496137371935617789
 GameObject:
   m_ObjectHideFlags: 0

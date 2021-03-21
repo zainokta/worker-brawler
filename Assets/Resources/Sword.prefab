@@ -127,7 +127,7 @@ MonoBehaviour:
   MoveDir: 0
   ProjectSpeed: 15
   DestroyTime: 2
-  Damage: 2
+  Damage: 15
 --- !u!114 &1001600040796023209
 MonoBehaviour:
   m_ObjectHideFlags: 0
