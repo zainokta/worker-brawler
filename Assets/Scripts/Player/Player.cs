@@ -74,19 +74,22 @@ public class Player : MonoBehaviour
         var Move = new Vector3(Input.GetAxisRaw("Horizontal"), 0);
         transform.position += Move * MoveSpeed * Time.deltaTime;
 
-        if (Input.GetKeyDown(KeyCode.LeftArrow))
+        if (Input.GetKey(KeyCode.LeftArrow))
         {
             photonView.RPC("FlipTrue", RpcTarget.AllBuffered);
+            photonView.RPC("AnimatedSprite", RpcTarget.AllBuffered, "Run");
         }
 
-        if (Input.GetKeyDown(KeyCode.RightArrow))
+        if (Input.GetKey(KeyCode.RightArrow))
         {
             photonView.RPC("FlipFalse", RpcTarget.AllBuffered);
+            photonView.RPC("AnimatedSprite", RpcTarget.AllBuffered, "Run");
         }
 
         if (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.UpArrow))
         {
             photonView.RPC("Jump", RpcTarget.AllBuffered);
+            photonView.RPC("AnimatedSprite", RpcTarget.AllBuffered, "Jump");
         }
 
         if (Input.GetKeyDown(KeyCode.A))
@@ -98,6 +101,8 @@ public class Player : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.LeftShift) || Input.GetKeyDown(KeyCode.RightShift)) 
         {
             photonView.RPC("Slide", RpcTarget.AllBuffered);
+            photonView.RPC("AnimatedSprite", RpcTarget.AllBuffered, "Sliding");
+
         }
 
         if (Input.GetKeyDown(KeyCode.LeftControl) || Input.GetKeyDown(KeyCode.RightControl))
@@ -136,7 +141,6 @@ public class Player : MonoBehaviour
     private void FlipFalse()
     {
         Sr.flipX = false;
-        photonView.RPC("AnimatedSprite", RpcTarget.AllBuffered, "Run");
     }
 
     [PunRPC]
@@ -144,7 +148,6 @@ public class Player : MonoBehaviour
     {
         if (JumpTimes > 0)
         {
-            photonView.RPC("AnimatedSprite", RpcTarget.AllBuffered, "Jump");
             rb.AddForce(transform.up * JumpForce);
             IsGrounded = false;
             JumpTimes -= 1;
@@ -159,7 +162,6 @@ public class Player : MonoBehaviour
         SlideCollider.enabled = true;
         CrouchCollider.enabled = false;
 
-        photonView.RPC("AnimatedSprite", RpcTarget.AllBuffered, "Sliding");
         if (Sr.flipX == false)
         {
             rb.AddForce(Vector2.right * slideSpeed);
