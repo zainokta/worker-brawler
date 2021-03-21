@@ -74,12 +74,12 @@ public class Player : MonoBehaviour
         var Move = new Vector3(Input.GetAxisRaw("Horizontal"), 0);
         transform.position += Move * MoveSpeed * Time.deltaTime;
 
-        if (Input.GetKeyDown(KeyCode.LeftArrow) || Input.GetKeyDown(KeyCode.LeftArrow))
+        if (Input.GetKeyDown(KeyCode.LeftArrow))
         {
             photonView.RPC("FlipTrue", RpcTarget.AllBuffered);
         }
 
-        if (Input.GetKeyDown(KeyCode.RightArrow) || Input.GetKeyDown(KeyCode.RightArrow))
+        if (Input.GetKeyDown(KeyCode.RightArrow))
         {
             photonView.RPC("FlipFalse", RpcTarget.AllBuffered);
         }
