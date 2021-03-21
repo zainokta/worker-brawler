@@ -77,12 +77,12 @@ public class PlayManager : MonoBehaviourPunCallbacks
         {
             LoseWinState.text = "You Win";
         }
-        else if (playerHealth < enemyHealth)
+        if (playerHealth < enemyHealth)
         {
 
             LoseWinState.text = "You Lose";
         }
-        else if(playerHealth == enemyHealth)
+        if(playerHealth == enemyHealth)
         {
             LoseWinState.text = "Draw";
         }
