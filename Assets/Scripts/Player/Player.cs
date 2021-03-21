@@ -17,7 +17,6 @@ public class Player : MonoBehaviour
     public BoxCollider2D CrouchCollider;
 
     public SpriteRenderer Sr;
-    public SpriteRenderer Weapon;
     public Text PlayerName;
 
     public bool IsGrounded = false;
@@ -57,8 +56,18 @@ public class Player : MonoBehaviour
     {
         if (photonView.IsMine)
         {
+            this.gameObject.tag = "Player";
             CheckInput();
         }
+        else
+        {
+            this.gameObject.tag = "Enemy";
+        }
+
+        /*if(!Physics.Raycast(transform.position, -transform.up, 5))
+        {
+            Collider.isTrigger = false;
+        }*/
     }
 
     private void CheckInput()
