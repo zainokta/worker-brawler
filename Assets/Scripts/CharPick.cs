@@ -5,13 +5,12 @@ using UnityEngine.SceneManagement;
 
 public class CharPick : MonoBehaviour
 {
+    SoundManager soundManager;
     public int index;
-    [SerializeField] bool keyDown;
-    [SerializeField] int maxIndex;
     // Start is called before the first frame update
     void Start()
     {
-
+        soundManager = FindObjectOfType<SoundManager>();
     }
 
     // Update is called once per frame
@@ -22,6 +21,7 @@ public class CharPick : MonoBehaviour
 
     public void CharSelect(int thisIndex)
     {
+        soundManager.Play("Click");
         GameManager gm = FindObjectOfType<GameManager>();
         gm.pl.PlayerChoosen = thisIndex;
         SceneManager.LoadScene("Lobby");

@@ -13,7 +13,7 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     [SerializeField]
     private Text roomName;
     private bool started;
-
+    SoundManager soundManager;
 
     // Start is called before the first frame update
     void Start()
@@ -21,6 +21,7 @@ public class LobbyManager : MonoBehaviourPunCallbacks
         texts[0].text = PhotonNetwork.LocalPlayer.NickName;
         roomName.text = "Server : " + PhotonNetwork.CloudRegion;
         PhotonNetwork.AutomaticallySyncScene = true;
+        soundManager = FindObjectOfType<SoundManager>();
     }
 
     // Update is called once per frame
@@ -57,6 +58,7 @@ public class LobbyManager : MonoBehaviourPunCallbacks
 
     public void LeaveRoom()
     {
+        soundManager.Play("Click");
         PhotonNetwork.LeaveRoom(true);
     }
 
