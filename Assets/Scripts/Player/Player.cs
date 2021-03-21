@@ -9,7 +9,7 @@ public class Player : MonoBehaviour
 {
     public PhotonView photonView;
     public Rigidbody2D rb;
-    //public Animator animator;
+    public Animator animator;
     public GameObject PlayerCamera;
 
     public BoxCollider2D Collider;
@@ -50,6 +50,10 @@ public class Player : MonoBehaviour
             PlayerName.color = Color.cyan;
         }
     }
+    private void Start()
+    {
+        animator = GetComponent<Animator>();
+    }
 
     // Update is called once per frame
     private void Update()
@@ -63,11 +67,6 @@ public class Player : MonoBehaviour
         {
             this.gameObject.tag = "Enemy";
         }
-
-        /*if(!Physics.Raycast(transform.position, -transform.up, 5))
-        {
-            Collider.isTrigger = false;
-        }*/
     }
 
     private void CheckInput()
@@ -75,12 +74,12 @@ public class Player : MonoBehaviour
         var Move = new Vector3(Input.GetAxisRaw("Horizontal"), 0);
         transform.position += Move * MoveSpeed * Time.deltaTime;
 
-        if (Input.GetKeyDown(KeyCode.LeftArrow) || Input.GetKeyDown(KeyCode.A))
+        if (Input.GetKeyDown(KeyCode.LeftArrow) || Input.GetKeyDown(KeyCode.LeftArrow))
         {
             photonView.RPC("FlipTrue", RpcTarget.AllBuffered);
         }
 
-        if (Input.GetKeyDown(KeyCode.RightArrow) || Input.GetKeyDown(KeyCode.D))
+        if (Input.GetKeyDown(KeyCode.RightArrow) || Input.GetKeyDown(KeyCode.RightArrow))
         {
             photonView.RPC("FlipFalse", RpcTarget.AllBuffered);
         }
@@ -90,9 +89,10 @@ public class Player : MonoBehaviour
             photonView.RPC("Jump", RpcTarget.AllBuffered);
         }
 
-        if (Input.GetKeyDown(KeyCode.J))
+        if (Input.GetKeyDown(KeyCode.A))
         {
             Shooting();
+            photonView.RPC("AnimatedSprite", RpcTarget.AllBuffered, "Attack");
         }
 
         if (Input.GetKeyDown(KeyCode.LeftShift) || Input.GetKeyDown(KeyCode.RightShift)) 
@@ -104,6 +104,12 @@ public class Player : MonoBehaviour
         {
             photonView.RPC("Crouch", RpcTarget.AllBuffered);
         }
+    }
+
+    [PunRPC]
+    private void AnimatedSprite(string state)
+    {
+        animator.Play(state);
     }
 
     private void Shooting()
@@ -123,12 +129,14 @@ public class Player : MonoBehaviour
     private void FlipTrue()
     {
         Sr.flipX = true;
+        photonView.RPC("AnimatedSprite", RpcTarget.AllBuffered, "Run");
     }
 
     [PunRPC]
     private void FlipFalse()
     {
         Sr.flipX = false;
+        photonView.RPC("AnimatedSprite", RpcTarget.AllBuffered, "Run");
     }
 
     [PunRPC]
@@ -136,6 +144,7 @@ public class Player : MonoBehaviour
     {
         if (JumpTimes > 0)
         {
+            photonView.RPC("AnimatedSprite", RpcTarget.AllBuffered, "Jump");
             rb.AddForce(transform.up * JumpForce);
             IsGrounded = false;
             JumpTimes -= 1;
@@ -150,6 +159,7 @@ public class Player : MonoBehaviour
         SlideCollider.enabled = true;
         CrouchCollider.enabled = false;
 
+        photonView.RPC("AnimatedSprite", RpcTarget.AllBuffered, "Sliding");
         if (Sr.flipX == false)
         {
             rb.AddForce(Vector2.right * slideSpeed);
@@ -175,7 +185,7 @@ public class Player : MonoBehaviour
 
     IEnumerator StopSlide()
     {
-        yield return new WaitForSeconds(0.6f);
+        yield return new WaitForSeconds(1f);
         Collider.enabled = true;
         SlideCollider.enabled = false;
         CrouchCollider.enabled = false;
