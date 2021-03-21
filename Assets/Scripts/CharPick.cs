@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class CharPick : MonoBehaviour
 {
@@ -16,38 +17,13 @@ public class CharPick : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetAxis("Horizontal") != 0)
-        {
-            if (!keyDown)
-            {
-                if (Input.GetAxis("Horizontal") > 0)
-                {
-                    if (index < maxIndex)
-                    {
-                        index++;
-                    }
-                    else
-                    {
-                        index = 0;
-                    }
-                }
-                else if (Input.GetAxis("Horizontal") < 0)
-                {
-                    if (index > 0)
-                    {
-                        index--;
-                    }
-                    else
-                    {
-                        index = maxIndex;
-                    }
-                }
-                keyDown = true;
-            }
-        }
-        else
-        {
-            keyDown = false;
-        }
+        
+    }
+
+    public void CharSelect(int thisIndex)
+    {
+        GameManager gm = FindObjectOfType<GameManager>();
+        gm.pl.PlayerChoosen = thisIndex;
+        SceneManager.LoadScene("Lobby");
     }
 }
