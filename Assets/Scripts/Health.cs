@@ -50,6 +50,7 @@ public class Health : MonoBehaviourPunCallbacks
         {
             pm.enemyHealth = amount;
         }
+        pm.checkHealth();
     }
 
 
