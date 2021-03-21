@@ -14,7 +14,6 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     private Text roomName;
     private bool started;
 
-    [SerializeField] Text timer;
 
     // Start is called before the first frame update
     void Start()
