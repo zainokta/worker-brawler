@@ -61,7 +61,7 @@ public class Weapon : MonoBehaviourPunCallbacks
 
         if(target != null && (!target.IsMine || target.IsRoomView))
         {
-            if(target.tag == "Player")
+            if(target.tag == "Enemy")
             {
                 target.RPC("ReduceHealth", RpcTarget.AllBuffered, Damage);
             }
