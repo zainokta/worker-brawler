@@ -14,9 +14,9 @@ public class GameManager : MonoBehaviour
     public static GameManager instance;
     public playerData pl;
     [SerializeField] Animator animFade;
-    private float timer;
+    //private float timer;
 
-    public float Timer { get => (int)timer; set => timer = value; }
+    //public float Timer { get => (int)timer; set => timer = value; }
 
     private void Awake()
     {
@@ -30,7 +30,7 @@ public class GameManager : MonoBehaviour
         }
         DontDestroyOnLoad(gameObject);
         FadeScreen("FadeIn");
-        Timer = 3f;
+        //Timer = 3f;
     }
 
     //call me for fade the screen
@@ -40,14 +40,14 @@ public class GameManager : MonoBehaviour
         StartCoroutine(WaitFade());
     }
 
-    public IEnumerator Countdown()
-    {
-        while(Timer > 0)
-        {
-            yield return new WaitForSeconds(1);
-            Timer--;
-        }
-    }
+    //public IEnumerator Countdown()
+    //{
+    //    while(Timer > 0)
+    //    {
+    //        yield return new WaitForSeconds(1);
+    //        Timer--;
+    //    }
+    //}
 
     IEnumerator WaitFade()
     {

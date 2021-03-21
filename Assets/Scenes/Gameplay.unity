@@ -154,9 +154,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   PlayerPref:
   - {fileID: 8480310434977078577, guid: 3cefcc1540c9c5e4e86886ae0a34c61f, type: 3}
-  - {fileID: 8480310434977078577, guid: 4ee34b9b2c3979d4894ac4a293ac1288, type: 3}
-  - {fileID: 8480310434977078577, guid: af5cdd7d31765274a8e0479f7bd81dce, type: 3}
-  - {fileID: 8480310434977078577, guid: cdd11df1d94e1504cac5eca3a682b8a5, type: 3}
+  - {fileID: 8480310434977078577, guid: 6f30f5bacddbd1c4fa8dd2d8e4f40ce7, type: 3}
+  - {fileID: 8480310434977078577, guid: 22a17892c171e7241abcc0325c55be0e, type: 3}
+  - {fileID: 8480310434977078577, guid: 15a9c9b378f9b2b4c9d700b05a0c49fc, type: 3}
   SceneCamera: {fileID: 763195745}
   PingText: {fileID: 2112988956}
 --- !u!4 &54539671

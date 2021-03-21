@@ -27,8 +27,8 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     // Update is called once per frame
     void Update()
     {
-        timer.text = GameManager.instance.Timer.ToString();
-        StartCoroutine(Timeout());
+        //timer.text = GameManager.instance.Timer.ToString();
+        //StartCoroutine(Timeout());
         if (PhotonNetwork.PlayerList.Length == 2)
         {
             texts[1].text = PhotonNetwork.PlayerListOthers[0].NickName;
@@ -45,11 +45,10 @@ public class LobbyManager : MonoBehaviourPunCallbacks
         if (!started && PhotonNetwork.IsMasterClient)
         {
             started = true;
-            StartCoroutine(GameManager.instance.Countdown());
+            //StartCoroutine(GameManager.instance.Countdown());
             yield return new WaitForSeconds(5f);
             PhotonNetwork.LoadLevel("Gameplay");
         }
-        
     }
 
     public override void OnPlayerEnteredRoom(Photon.Realtime.Player newPlayer)
