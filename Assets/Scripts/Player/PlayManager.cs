@@ -31,7 +31,7 @@ public class PlayManager : MonoBehaviourPunCallbacks
         GameManager Gm = FindObjectOfType<GameManager>();
         SpawnPlayer(Gm.pl.PlayerChoosen);
     }
-    
+
     private void FixedUpdate()
     {
         PingText.text = "Ping : " + PhotonNetwork.GetPing() + " ms";
