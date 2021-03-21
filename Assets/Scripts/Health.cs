@@ -10,8 +10,8 @@ public class Health : MonoBehaviourPunCallbacks
     public float Amount;
 
     public Image FillImage;
-    //private GameObject Player;
-    //private GameObject Enemy;
+    private GameObject Player;
+    private GameObject Enemy;
 
     //public Health EnemyStats;
 
@@ -20,33 +20,38 @@ public class Health : MonoBehaviourPunCallbacks
     public BoxCollider2D boxCollider2D;
     public Image Bar;
     public Text nameChar;
+    PlayManager pm;
 
     public static bool YouWin;
     public static bool YouLose;
     private void Start()
     {
+        Debug.Log(PhotonNetwork.PlayerListOthers[0].UserId);
+        pm = FindObjectOfType<PlayManager>();
         //Player = GameObject.FindGameObjectWithTag("Player");
         //Enemy = GameObject.FindGameObjectWithTag("Enemy");
     }
 
-    /*private void Update()
+    private void Update()
     {
-        EnemyStats = Enemy.GetComponent<Health>();
-        if (PlayManager.GameTime <= 0.0f)
+        if (pm.gameEnd)
         {
-            if (Amount > EnemyStats.Amount)
-            {
-                YouWin = true;
-            }
-            else if (Amount < EnemyStats.Amount)
-            {
-                YouLose = true;
-            }
+            sendHealth(Amount);
         }
+    }
+    [PunRPC]
+    public void sendHealth(float amount)
+    {
+        if (photonView.IsMine)
+        {
+            pm.playerHealth = amount;
+        }
+        if (!photonView.IsMine)
+        {
+            pm.enemyHealth = amount;
+        }
+    }
 
-        //Debug.Log(PlayerStats.Amount);
-        //Debug.Log(EnemyStats.Amount);
-    }*/
 
     [PunRPC]
     public void ReduceHealth(float amount)

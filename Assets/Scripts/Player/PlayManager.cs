@@ -12,10 +12,16 @@ public class PlayManager : MonoBehaviourPunCallbacks
     public GameObject SceneCamera;
     public Text PingText;
 
-    public static float GameTime = 180f;
+    public static float GameTime = 7f;
     public Text TimeInGame;
-
     public Text LoseWinState;
+
+    public bool YouWin;
+
+    public float playerHealth;
+    public float enemyHealth;
+
+    public bool gameEnd = false;
 
     // Start is called before the first frame update
     private void Awake()
@@ -28,13 +34,21 @@ public class PlayManager : MonoBehaviourPunCallbacks
 
     private void Update()
     {
-        PingText.text = "Ping : " + PhotonNetwork.GetPing() + " fps";
+        PingText.text = "Ping : " + PhotonNetwork.GetPing() + " ms";
 
         if(PhotonNetwork.CurrentRoom.PlayerCount == 2)
         {
             TimeInGame.gameObject.SetActive(true);
             GameTime -= 0.01f;
             TimeInGame.text = GameTime.ToString("0");
+            if (GameTime <= 0)
+            {
+                if (!gameEnd)
+                {
+                    checkHealth();
+                    gameEnd = true;
+                }
+            }
         }
         else
         {
@@ -54,13 +68,30 @@ public class PlayManager : MonoBehaviourPunCallbacks
 
         Debug.Log(Health.YouLose);
         Debug.Log(Health.YouWin);
-        Debug.Log(GameTime);
+        //Debug.Log(GameTime);
     }
+
+    public void checkHealth()
+    {
+        if (playerHealth > enemyHealth)
+        {
+            LoseWinState.text = "You Win";
+        }
+        if (playerHealth < enemyHealth)
+        {
+
+            LoseWinState.text = "You Lose";
+        }
+        if(playerHealth == enemyHealth)
+        {
+            LoseWinState.text = "Draw";
+        }
+    }
+
     public void SpawnPlayer(int plaChoose)
     {
         float randomValue = Random.Range(-1f, 1f);
         PhotonNetwork.Instantiate(PlayerPref[plaChoose].name, new Vector2(this.transform.position.x * randomValue, this.transform.position.y * randomValue), Quaternion.identity, 0);
-
         //GameCanvas.SetActive(false);
         SceneCamera.SetActive(false);
     }

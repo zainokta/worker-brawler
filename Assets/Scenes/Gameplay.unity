@@ -312,6 +312,10 @@ MonoBehaviour:
   PingText: {fileID: 2112988956}
   TimeInGame: {fileID: 819182025}
   LoseWinState: {fileID: 1978455215}
+  YouWin: 0
+  playerHealth: 0
+  enemyHealth: 0
+  gameEnd: 0
 --- !u!4 &54539671
 Transform:
   m_ObjectHideFlags: 0
@@ -1427,7 +1431,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &1978455215
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1461,7 +1465,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: New Text
+  m_Text: Condition
 --- !u!222 &1978455216
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1486,7 +1490,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -0.10242, y: 4}
+  m_AnchoredPosition: {x: -0.10242, y: 412}
   m_SizeDelta: {x: 379.71704, y: 92.01014}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &2112988955
