@@ -12,7 +12,7 @@ public class PlayManager : MonoBehaviourPunCallbacks
     public GameObject SceneCamera;
     public Text PingText;
 
-    public static float GameTime = 5f;
+    public static float GameTime = 7f;
     public Text TimeInGame;
     public Text LoseWinState;
 
