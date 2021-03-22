@@ -11,7 +11,7 @@ public class ButtonOpen : MonoBehaviour
 
     public void CloseApp()
     {
-        OpenButton("https://saweria.co/ategonstd");
+        OpenButton("https://www.patreon.com/AtegonStudio");
         Application.Quit();
     }
 }
