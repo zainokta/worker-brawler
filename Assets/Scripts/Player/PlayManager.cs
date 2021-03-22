@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using Photon.Pun;
 using Photon.Realtime;
@@ -13,6 +14,8 @@ public class PlayManager : MonoBehaviourPunCallbacks
     public Text PingText;
 
     public static float GameTime = 7f;
+
+    public GameObject winlosePanel;
     public Text TimeInGame;
     public Text LoseWinState;
 
@@ -34,40 +37,47 @@ public class PlayManager : MonoBehaviourPunCallbacks
 
     private void FixedUpdate()
     {
-        PingText.text = "Ping : " + PhotonNetwork.GetPing() + " ms";
-
-        if(PhotonNetwork.CurrentRoom.PlayerCount == 2)
+        if (!gameEnd)
         {
-            TimeInGame.gameObject.SetActive(true);
-            GameTime -= 0.01f;
-            TimeInGame.text = GameTime.ToString("0");
-            if (GameTime <= 0)
+            PingText.text = "Ping : " + PhotonNetwork.GetPing() + " ms";
+
+            if (PhotonNetwork.CurrentRoom.PlayerCount == 2)
             {
-                if (!gameEnd)
+                TimeInGame.gameObject.SetActive(true);
+                GameTime -= 0.01f;
+                TimeInGame.text = GameTime.ToString("0");
+                if (GameTime <= 0)
                 {
-                    gameEnd = true;
+                    if (!gameEnd)
+                    {
+                        winlosePanel.SetActive(true);
+                        gameEnd = true;
+                    }
                 }
             }
-        }
-        else
-        {
-            TimeInGame.gameObject.SetActive(false);
+            else
+            {
+                TimeInGame.gameObject.SetActive(false);
+            }
+
+            if (Health.YouLose == true)
+            {
+                LoseWinState.gameObject.SetActive(true);
+                LoseWinState.text = "You Lose";
+                gameEnd = true;
+            }
+            else if (Health.YouWin == true)
+            {
+                LoseWinState.gameObject.SetActive(true);
+                LoseWinState.text = "You Win";
+                gameEnd = true;
+            }
+
+            Debug.Log(Health.YouLose);
+            Debug.Log(Health.YouWin);
+            //Debug.Log(GameTime);
         }
 
-        if (Health.YouLose == true)
-        {
-            LoseWinState.gameObject.SetActive(true);
-            LoseWinState.text = "You Lose"; 
-        }
-        else if(Health.YouWin == true)
-        {
-            LoseWinState.gameObject.SetActive(true);
-            LoseWinState.text = "You Win";
-        }
-
-        Debug.Log(Health.YouLose);
-        Debug.Log(Health.YouWin);
-        //Debug.Log(GameTime);
     }
 
     public void checkHealth()
@@ -85,6 +95,14 @@ public class PlayManager : MonoBehaviourPunCallbacks
         {
             LoseWinState.text = "Draw";
         }
+    }
+    public void LeaveRoom()
+    {
+        SoundManager soundManager = FindObjectOfType<SoundManager>();
+        soundManager.Play("Click");
+        PhotonNetwork.LeaveRoom(true);
+        SceneManager.LoadScene("MainMenu");
+        
     }
 
     public void SpawnPlayer(int plaChoose)
