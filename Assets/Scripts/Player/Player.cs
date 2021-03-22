@@ -19,6 +19,7 @@ public class Player : MonoBehaviour
     public SpriteRenderer Sr;
     public Text PlayerName;
 
+    PlayManager pm;
     float attackCDTemp;
     public float attackCD = 1;
     bool canAttack = true;
@@ -63,6 +64,7 @@ public class Player : MonoBehaviour
     }
     private void Start()
     {
+        pm = FindObjectOfType<PlayManager>();
         animator = GetComponent<Animator>();
         attackCDTemp = attackCD;
     }
@@ -70,14 +72,17 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     private void Update()
     {
-        if (photonView.IsMine)
+        if (!pm.gameEnd)
         {
-            this.gameObject.tag = "Player";
-            CheckInput();
-        }
-        else
-        {
-            this.gameObject.tag = "Enemy";
+            if (photonView.IsMine)
+            {
+                this.gameObject.tag = "Player";
+                CheckInput();
+            }
+            else
+            {
+                this.gameObject.tag = "Enemy";
+            }
         }
     }
 
