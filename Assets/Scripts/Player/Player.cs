@@ -29,6 +29,8 @@ public class Player : MonoBehaviour
 
     public bool IsGrounded = false;
     public bool IsAttack = false;
+    public bool isSliding = false;
+
     public float MoveSpeed;
     public float JumpForce;
     private int JumpTimes;
@@ -88,7 +90,7 @@ public class Player : MonoBehaviour
                 var Move = new Vector3(1, 0);
                 transform.position += Move * MoveSpeed * Time.deltaTime;
                 photonView.RPC("FlipFalse", RpcTarget.AllBuffered);
-                if (IsGrounded)
+                if (IsGrounded||!isSliding)
                 {
                     photonView.RPC("AnimatedSprite", RpcTarget.AllBuffered, "Run");
                 }
@@ -98,7 +100,7 @@ public class Player : MonoBehaviour
                 var Move = new Vector3(-1, 0);
                 transform.position += Move * MoveSpeed * Time.deltaTime;
                 photonView.RPC("FlipTrue", RpcTarget.AllBuffered);
-                if (IsGrounded)
+                if (IsGrounded||!isSliding)
                 {
                     photonView.RPC("AnimatedSprite", RpcTarget.AllBuffered, "Run");
                 }
@@ -112,6 +114,7 @@ public class Player : MonoBehaviour
             {
                 if (Input.GetKeyDown(KeyCode.S))
                 {
+                    isSliding = true;
                     photonView.RPC("Slide", RpcTarget.AllBuffered);
                     photonView.RPC("AnimatedSprite", RpcTarget.AllBuffered, "Sliding");
                     canSlide = false;
@@ -137,6 +140,7 @@ public class Player : MonoBehaviour
             SlidekCD -= Time.deltaTime;
             if(SlidekCD <= 0)
             {
+                isSliding = false;
                 SlidekCD = SlideCDTemp;
                 canSlide = true;
             }
