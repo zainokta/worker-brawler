@@ -315,8 +315,11 @@ MonoBehaviour:
   CrouchCollider: {fileID: 6874605630158643832}
   Sr: {fileID: 3647116797707232586}
   PlayerName: {fileID: 4376845848462634718}
+  attackCD: 1
+  SlidekCD: 1
   IsGrounded: 0
   IsAttack: 0
+  isSliding: 0
   MoveSpeed: 5
   JumpForce: 300
   slideSpeed: 600
