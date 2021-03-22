@@ -24,7 +24,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2944792044057403139}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -1.088, y: -0.93, z: -35.08569}
+  m_LocalPosition: {x: -1.088, y: -0.31, z: -35.08569}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 3647116797707232587}
@@ -133,7 +133,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3365059809587880380}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 1.06, y: -0.93, z: -35.08569}
+  m_LocalPosition: {x: 1.06, y: -0.31, z: -35.08569}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 3647116797707232587}
@@ -316,6 +316,7 @@ MonoBehaviour:
   Sr: {fileID: 3647116797707232586}
   PlayerName: {fileID: 4376845848462634718}
   IsGrounded: 0
+  IsAttack: 0
   MoveSpeed: 5
   JumpForce: 300
   slideSpeed: 600

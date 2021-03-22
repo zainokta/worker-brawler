@@ -19,7 +19,11 @@ public class Player : MonoBehaviour
     public SpriteRenderer Sr;
     public Text PlayerName;
 
+    float attackCDTemp;
+    public float attackCD = 1;
+    bool canAttack = true;
     public bool IsGrounded = false;
+    public bool IsAttack = false;
     public float MoveSpeed;
     public float JumpForce;
     private int JumpTimes;
@@ -53,6 +57,7 @@ public class Player : MonoBehaviour
     private void Start()
     {
         animator = GetComponent<Animator>();
+        attackCDTemp = attackCD;
     }
 
     // Update is called once per frame
@@ -71,45 +76,80 @@ public class Player : MonoBehaviour
 
     private void CheckInput()
     {
-        var Move = new Vector3(Input.GetAxisRaw("Horizontal"), 0);
-        transform.position += Move * MoveSpeed * Time.deltaTime;
-
-        if (Input.GetKeyDown(KeyCode.LeftArrow) || Input.GetKeyDown(KeyCode.LeftArrow))
+        if (!IsAttack)
         {
-            photonView.RPC("FlipTrue", RpcTarget.AllBuffered);
-        }
+            if (Input.GetKey(KeyCode.RightArrow))
+            {
+                var Move = new Vector3(1, 0);
+                transform.position += Move * MoveSpeed * Time.deltaTime;
+                photonView.RPC("FlipFalse", RpcTarget.AllBuffered);
+                if (IsGrounded)
+                {
+                    photonView.RPC("AnimatedSprite", RpcTarget.AllBuffered, "Run");
+                }
+            }
+            if (Input.GetKey(KeyCode.LeftArrow))
+            {
+                var Move = new Vector3(-1, 0);
+                transform.position += Move * MoveSpeed * Time.deltaTime;
+                photonView.RPC("FlipTrue", RpcTarget.AllBuffered);
+                if (IsGrounded)
+                {
+                    photonView.RPC("AnimatedSprite", RpcTarget.AllBuffered, "Run");
+                }
+            }
+            if (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.UpArrow))
+            {
+                photonView.RPC("Jump", RpcTarget.AllBuffered);
+                photonView.RPC("AnimatedSprite", RpcTarget.AllBuffered, "Jump");
+            }
 
-        if (Input.GetKeyDown(KeyCode.RightArrow) || Input.GetKeyDown(KeyCode.RightArrow))
-        {
-            photonView.RPC("FlipFalse", RpcTarget.AllBuffered);
+            if (Input.GetKeyDown(KeyCode.LeftShift) || Input.GetKeyDown(KeyCode.RightShift))
+            {
+                photonView.RPC("Slide", RpcTarget.AllBuffered);
+                photonView.RPC("AnimatedSprite", RpcTarget.AllBuffered, "Sliding");
+            }
+            if (!Input.anyKey && IsGrounded)
+            {
+                photonView.RPC("AnimatedSprite", RpcTarget.AllBuffered, "Idle");
+            }
         }
-
-        if (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.UpArrow))
+        if (canAttack)
         {
-            photonView.RPC("Jump", RpcTarget.AllBuffered);
+            if (Input.GetKeyDown(KeyCode.A))
+            {
+                IsAttack = true;
+                photonView.RPC("AnimatedSprite", RpcTarget.AllBuffered, "Attack");
+                Shooting();
+                canAttack = false;
+            }
         }
-
-        if (Input.GetKeyDown(KeyCode.A))
+        if (!canAttack)
         {
-            Shooting();
-            photonView.RPC("AnimatedSprite", RpcTarget.AllBuffered, "Attack");
+            attackCD -= Time.deltaTime;
+            if(attackCD <= 0)
+            {
+                IsAttack = false;
+                attackCD = attackCDTemp;
+                canAttack = true;
+            }
         }
-
-        if (Input.GetKeyDown(KeyCode.LeftShift) || Input.GetKeyDown(KeyCode.RightShift)) 
-        {
-            photonView.RPC("Slide", RpcTarget.AllBuffered);
-        }
-
-        if (Input.GetKeyDown(KeyCode.LeftControl) || Input.GetKeyDown(KeyCode.RightControl))
-        {
-            photonView.RPC("Crouch", RpcTarget.AllBuffered);
-        }
+        //if (Input.GetKeyDown(KeyCode.LeftControl) || Input.GetKeyDown(KeyCode.RightControl))
+        //{
+        //    photonView.RPC("Crouch", RpcTarget.AllBuffered);
+        //}
     }
 
     [PunRPC]
     private void AnimatedSprite(string state)
     {
         animator.Play(state);
+    }
+    [PunRPC]
+    private void AnimatedCond(string state,bool cond)
+    {
+        //animator.SetBool(state,cond);
+        //animator.GetBool
     }
 
     private void Shooting()
@@ -129,14 +169,12 @@ public class Player : MonoBehaviour
     private void FlipTrue()
     {
         Sr.flipX = true;
-        photonView.RPC("AnimatedSprite", RpcTarget.AllBuffered, "Run");
     }
 
     [PunRPC]
     private void FlipFalse()
     {
         Sr.flipX = false;
-        photonView.RPC("AnimatedSprite", RpcTarget.AllBuffered, "Run");
     }
 
     [PunRPC]
@@ -144,7 +182,6 @@ public class Player : MonoBehaviour
     {
         if (JumpTimes > 0)
         {
-            photonView.RPC("AnimatedSprite", RpcTarget.AllBuffered, "Jump");
             rb.AddForce(transform.up * JumpForce);
             IsGrounded = false;
             JumpTimes -= 1;
@@ -159,7 +196,6 @@ public class Player : MonoBehaviour
         SlideCollider.enabled = true;
         CrouchCollider.enabled = false;
 
-        photonView.RPC("AnimatedSprite", RpcTarget.AllBuffered, "Sliding");
         if (Sr.flipX == false)
         {
             rb.AddForce(Vector2.right * slideSpeed);
