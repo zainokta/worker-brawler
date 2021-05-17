@@ -38,6 +38,19 @@ public class Health : MonoBehaviourPunCallbacks
         {
             sendHealth(Amount);
         }
+        if (transform.position.y <= -25)
+        {
+            photonView.RPC("setplaymanager", RpcTarget.AllBuffered);
+        }
+
+    }
+
+    [PunRPC]
+    public void setplaymanager()
+    {
+        pm.gameEnd = true;
+        Amount = 0;
+        sendHealth(Amount);
     }
     [PunRPC]
     public void sendHealth(float amount)
@@ -50,7 +63,7 @@ public class Health : MonoBehaviourPunCallbacks
         {
             pm.enemyHealth = amount;
         }
-        pm.checkHealth();
+        //pm.checkHealth();
     }
 
 
@@ -79,6 +92,8 @@ public class Health : MonoBehaviourPunCallbacks
         Bar.enabled = false;
         //Player.SetActive(false);
         WinLoseState();
+        sendHealth(Amount);
+        pm.gameEnd = true;
     }
 
     [PunRPC]
@@ -86,7 +101,7 @@ public class Health : MonoBehaviourPunCallbacks
     {
         if (photonView.IsMine)
         {
-            if(this.gameObject.tag == "Player" && Amount <= 0)
+            if (this.gameObject.tag == "Player" && Amount <= 0)
             {
                 YouLose = true;
             }
@@ -97,6 +112,8 @@ public class Health : MonoBehaviourPunCallbacks
         }
         else if (!photonView.IsMine)
         {
+
+            sendHealth(Amount);
             if (this.gameObject.tag == "Player" && Amount <= 0)
             {
                 YouLose = true;
@@ -106,6 +123,7 @@ public class Health : MonoBehaviourPunCallbacks
                 YouWin = true;
             }
         }
+        pm.gameEnd = true;
     }
 
     // Update is called once per frame
@@ -121,7 +139,6 @@ public class Health : MonoBehaviourPunCallbacks
             Amount -= amount;
             FillImage.fillAmount -= amount;
         }
-
         CheckHealth();
     }
 }

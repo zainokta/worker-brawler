@@ -13,7 +13,7 @@ public class PlayManager : MonoBehaviourPunCallbacks
     public GameObject SceneCamera;
     public Text PingText;
 
-    public static float GameTime = 7f;
+    public float GameTime = 7f;
 
     public GameObject winlosePanel;
     public Text TimeInGame;
@@ -37,51 +37,37 @@ public class PlayManager : MonoBehaviourPunCallbacks
 
     private void FixedUpdate()
     {
-        if (!gameEnd)
+        PingText.text = "Ping : " + PhotonNetwork.GetPing() + " ms";
+        if (PhotonNetwork.CurrentRoom.PlayerCount == 2)
         {
-            PingText.text = "Ping : " + PhotonNetwork.GetPing() + " ms";
 
-            if (PhotonNetwork.CurrentRoom.PlayerCount == 2)
+            TimeInGame.gameObject.SetActive(true);
+            if (!gameEnd)
             {
-                TimeInGame.gameObject.SetActive(true);
                 GameTime -= 0.01f;
                 TimeInGame.text = GameTime.ToString("0");
-                if (GameTime <= 0)
-                {
-                    if (!gameEnd)
-                    {
-                        winlosePanel.SetActive(true);
-                        gameEnd = true;
-                    }
-                }
             }
-            else
+            else if (gameEnd)
             {
-                TimeInGame.gameObject.SetActive(false);
+                checkHealth();
             }
-
-            if (Health.YouLose == true)
+            if (GameTime <= 0)
             {
-                LoseWinState.gameObject.SetActive(true);
-                LoseWinState.text = "You Lose";
                 gameEnd = true;
             }
-            else if (Health.YouWin == true)
-            {
-                LoseWinState.gameObject.SetActive(true);
-                LoseWinState.text = "You Win";
-                gameEnd = true;
-            }
-
-            Debug.Log(Health.YouLose);
-            Debug.Log(Health.YouWin);
-            //Debug.Log(GameTime);
         }
-
+        else
+        {
+            TimeInGame.gameObject.SetActive(false);
+        }
+        Debug.Log(Health.YouLose);
+        Debug.Log(Health.YouWin);
+        //Debug.Log(GameTime);
     }
 
     public void checkHealth()
     {
+        winlosePanel.SetActive(true);
         if (playerHealth > enemyHealth)
         {
             LoseWinState.text = "You Win";

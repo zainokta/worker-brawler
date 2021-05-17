@@ -62,6 +62,7 @@ public class Player : MonoBehaviour
             PlayerName.color = Color.cyan;
         }
     }
+
     private void Start()
     {
         pm = FindObjectOfType<PlayManager>();
@@ -85,9 +86,19 @@ public class Player : MonoBehaviour
             }
         }
     }
+    public void gerak()
+    {
+        transform.Translate(Vector3.forward);
+    }
+
 
     private void CheckInput()
     {
+
+        if (Input.GetKey(KeyCode.RightArrow))
+        {
+            photonView.RPC("gerak", RpcTarget.AllBuffered);
+        }
         if (!IsAttack)
         {
             if (Input.GetKey(KeyCode.RightArrow))

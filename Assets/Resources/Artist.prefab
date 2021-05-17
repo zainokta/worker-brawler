@@ -323,8 +323,8 @@ MonoBehaviour:
   MoveSpeed: 5
   JumpForce: 300
   slideSpeed: 600
-  ProjectileObjectRight: {fileID: 5693716904153691496, guid: 6c9a95bb454968245a180d1a8a47012c, type: 3}
-  ProjectileObjectLeft: {fileID: 4003769628327699335, guid: e747f8a8dcc377d4b8fed8be1612d59a, type: 3}
+  ProjectileObjectRight: {fileID: 3050120742251797879, guid: 908984f03f1384b4d898cb68ca777753, type: 3}
+  ProjectileObjectLeft: {fileID: 7777791751187967266, guid: dc66a526e90e63d40a15b9283e6b0f3e, type: 3}
   FirePosRight: {fileID: 279986587928608957}
   FirePosLeft: {fileID: 5681764148492610163}
 --- !u!61 &8931097740836741843

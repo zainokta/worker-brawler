@@ -56,9 +56,7 @@ public class Weapon : MonoBehaviourPunCallbacks
         {
             return;
         }
-
         PhotonView target = collision.gameObject.GetComponent<PhotonView>();
-
         if(target != null && (!target.IsMine || target.IsRoomView))
         {
             if(target.tag == "Enemy")
